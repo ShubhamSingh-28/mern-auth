@@ -6,6 +6,10 @@ import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled promise rejection:", reason);
+});
+
 const app = express();
 const PORT = process.env.PORT ?? 5000;
 const MONGODB_URI = process.env.MONGODB_URI as string;

@@ -1,29 +1,9 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 
-interface DashboardData {
-  message: string;
-  user: { id: string; name: string; email: string; memberSince: string };
-}
-
 export function Dashboard() {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [data, setData] = useState<DashboardData | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await api.get("/dashboard");
-        setData(res.data);
-      } catch {
-        setError("Could not load dashboard data");
-      }
-    })();
-  }, []);
 
   async function handleLogout() {
     await logout();
@@ -36,19 +16,16 @@ export function Dashboard() {
         <h1>Dashboard</h1>
         <button onClick={handleLogout}>Log out</button>
       </header>
-      {error && <p className="form-error">{error}</p>}
-      {data ? (
+      {user && (
         <div className="dashboard-card">
-          <p>{data.message}</p>
+          <p>Welcome back, {user.name}</p>
           <dl>
             <dt>Email</dt>
-            <dd>{data.user.email}</dd>
+            <dd>{user.email}</dd>
             <dt>Member since</dt>
-            <dd>{new Date(data.user.memberSince).toLocaleDateString()}</dd>
+            <dd>{new Date(user.memberSince).toLocaleDateString()}</dd>
           </dl>
         </div>
-      ) : (
-        !error && <p>Loading…</p>
       )}
     </div>
   );

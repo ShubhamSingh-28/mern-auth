@@ -40,7 +40,7 @@ export async function signup(req: Request, res: Response) {
     res.cookie(REFRESH_COOKIE_NAME, refreshToken, refreshCookieOptions);
     return res.status(201).json({
       accessToken,
-      user: { id: user._id, name: user.name, email: user.email },
+      user: { id: user._id, name: user.name, email: user.email, memberSince: user.createdAt },
     });
   } catch (err) {
     console.error("Signup error:", err);
@@ -69,7 +69,7 @@ export async function login(req: Request, res: Response) {
     res.cookie(REFRESH_COOKIE_NAME, refreshToken, refreshCookieOptions);
     return res.status(200).json({
       accessToken,
-      user: { id: user._id, name: user.name, email: user.email },
+      user: { id: user._id, name: user.name, email: user.email, memberSince: user.createdAt },
     });
   } catch (err) {
     console.error("Login error:", err);

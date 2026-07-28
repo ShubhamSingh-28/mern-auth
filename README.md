@@ -57,7 +57,7 @@ npm install
 npm run dev
 ```
 
-Visit `http://localhost:5173`.
+Visit `(https://mern-auth-one-eta.vercel.app/)`.
 
 ## Deployment notes
 
